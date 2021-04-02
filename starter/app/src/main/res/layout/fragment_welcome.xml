@@ -9,6 +9,8 @@
             type="com.udacity.shoestore.welcome.WelcomeViewModel" />
     </data>
 
+    <!-- constraintlayout to support responsive design-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -24,7 +24,7 @@ class ShoeListViewModel : ViewModel() {
     val isAddShoe : LiveData<Boolean>
         get() = _isAddShoe
 
-    var mShoeList : MutableList<Shoe>
+    private var mShoeList : MutableList<Shoe>
 
 
 
@@ -37,7 +37,8 @@ class ShoeListViewModel : ViewModel() {
     }
 
     fun addShoe (shoe : Shoe) {
-        _isAddShoe.value = true
+        setIsAddShoe(true);
+       // _isAddShoe.value = true
         mShoeList.add(shoe)
         _shoeList.value = mShoeList
         Timber.i("In Add shoe")
@@ -46,5 +47,13 @@ class ShoeListViewModel : ViewModel() {
     fun cancelAddShoe () {
         _isCancelAdd.value = true
         Timber.i("In Cancel shoe")
+    }
+
+    fun setIsAddShoe (isAddShoe : Boolean) {
+        _isAddShoe.value = isAddShoe
+    }
+
+    fun setIsCancel (isCancel : Boolean) {
+        _isCancelAdd.value = isCancel
     }
 }

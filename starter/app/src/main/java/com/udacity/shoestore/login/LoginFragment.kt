@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.udacity.shoestore.R
 import com.udacity.shoestore.databinding.FragmentLoginBinding
 import com.udacity.shoestore.models.User
+import timber.log.Timber
 
 class LoginFragment : Fragment() {
 
@@ -31,15 +32,19 @@ class LoginFragment : Fragment() {
         binding.loginViewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        binding.userModel = User("" , "")
+        binding.userModel = User()
 
         // Observers
         viewModel.isAuthorized.observe(viewLifecycleOwner , Observer { isAuthorized->
             if (isAuthorized) {
-               findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToWelcomeFragment())
+                 // Without this checking the app is crashing
+                //  java.lang.IllegalArgumentException: navigation destination
+                //  action_loginFragment_to_welcomeFragment is unknown to this NavController
+                if (findNavController().currentDestination?.id == R.id.loginFragment) {
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToWelcomeFragment())
+                }
             }
         })
-
 
         return binding.root
     }

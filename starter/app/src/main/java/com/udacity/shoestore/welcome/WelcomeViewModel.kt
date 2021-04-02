@@ -5,8 +5,4 @@ import androidx.lifecycle.ViewModel
 
 class WelcomeViewModel : ViewModel() {
 
-    init {
-
-    }
-
 }

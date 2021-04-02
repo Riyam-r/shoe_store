@@ -16,7 +16,7 @@ import com.udacity.shoestore.models.Shoe
 import com.udacity.shoestore.models.User
 import timber.log.Timber
 
-//Adding shoe
+
 class ShoeDetailFragment : Fragment() {
 
     lateinit var binding : FragmentShoeDetailBinding
@@ -29,21 +29,31 @@ class ShoeDetailFragment : Fragment() {
 
         // View binding
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_shoe_detail , container , false)
-
+        binding.lifecycleOwner = this
         // Data binding - shared view model
         viewModel = ViewModelProvider(requireActivity()).get(ShoeListViewModel::class.java)
         binding.shoeListViewModel = viewModel
 
-        binding.shoeModel = Shoe("" , 0.0 , "" , "")
+        binding.shoeModel = Shoe()
+
+
+        viewModel.shoeList.observe(viewLifecycleOwner , Observer { shoeList ->
+
+        })
 
         //Observers
         viewModel.isCancelAdd.observe(viewLifecycleOwner , Observer { isCancel ->
-            Timber.i("Fragment Cancel shoe")
-            findNavController().navigate(ShoeDetailFragmentDirections.actionShoeDetailFragmentToShoesFragment())
+            if (isCancel) {
+                viewModel.setIsCancel(false) // reset for next visit value
+                findNavController().navigate(ShoeDetailFragmentDirections.actionShoeDetailFragmentToShoesFragment())
+            }
         })
 
         viewModel.isAddShoe.observe(viewLifecycleOwner , Observer { isAdd ->
-           findNavController().navigate(ShoeDetailFragmentDirections.actionShoeDetailFragmentToShoesFragment())
+            if (isAdd) {
+                viewModel.setIsAddShoe(false); //reset value for next visit
+                findNavController().navigate(ShoeDetailFragmentDirections.actionShoeDetailFragmentToShoesFragment())
+            }
         })
 
         // Inflate the layout for this fragment

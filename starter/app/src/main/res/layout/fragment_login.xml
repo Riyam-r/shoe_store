@@ -13,6 +13,7 @@
             type="com.udacity.shoestore.models.User" />
     </data>
 
+    <!-- constraintlayout to support responsive design-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
